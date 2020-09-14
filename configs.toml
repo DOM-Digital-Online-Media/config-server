@@ -1,0 +1,58 @@
+# if the client calls without any arguments
+# the [empty] configuration is deliverd.
+# it should remain empty :-)
+[empty]
+
+# if no rules matches but there ARE parameters posted,
+# the [default] configuration is deliverd.
+# it should remain empty. please adjust rules instead.
+[default]
+
+[production]
+NAME = "production"
+AUTH_BACKEND = "auth.dom.de"
+CONTENT_BACKEND = "content.dom.de"
+
+[development]
+inherit = "production"
+AUTH_BACKEND = "devauth.dom.de"
+CONTENT_BACKEND = "devcontent.dom.de"
+
+[api_v2]
+# please note: 'inherit' is a reserved word.
+# the value of 'inherit' refers to another config block which is taken as a template for this one.
+# the templates values will be overwritten by those in this block.
+# you may also define additional values to your liking.
+inherit = "development"
+AUTH_BACKEND = "auth2.dom.de"
+
+[new_comm_proc]
+AUTH_BACKEND = "auth2.dom.de"
+COMMUNICATION_PROCESS = "new"
+
+[rules]
+
+  [rules.api_v2]
+    # higher prio beats lower prio!
+    # in case of more then one rule matching, the one with higher prio wins.
+    prio = 10
+    expression = "a and b"
+
+    [rules.api_v2.conditions]
+      [rules.api_v2.conditions.a]
+        key = "VERSION"
+        value = "4.1.3"
+        comparator = ">="
+
+      [rules.api_v2.conditions.b]
+        key = "OS"
+        value = "Android"
+        comparator = "=="
+
+  [rules.new_comm_proc]
+    prio = 11
+    [rules.new_comm_proc.conditions]
+      [rules.new_comm_proc.conditions.a]
+        key = "VERSION"
+        value = "4.1.3"
+        comparator = ">"

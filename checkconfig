@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if [[ $( readlink "${BASH_SOURCE[0]}" ) == "" ]]
+then
+  DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+else
+  subdir="$( dirname $( readlink "${BASH_SOURCE[0]}" ) )"
+  DIR="$( cd $( dirname ${BASH_SOURCE[0]} ) >/dev/null 2>&1 && cd "${subdir}" >/dev/null 2>&1 && pwd )"
+fi
+
+
+
+source="source ${DIR}/.venv/bin/activate"
+$source; python ${DIR}/checkconfig.py
