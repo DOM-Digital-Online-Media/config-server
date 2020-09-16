@@ -11,3 +11,6 @@ def deliver():
     variables = request.get_json()
     config = match(variables, rules)
     return Response(dumps(configs[config].elements), mimetype='application/json')
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
