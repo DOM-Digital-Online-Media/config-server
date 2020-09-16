@@ -35,7 +35,7 @@ COMMUNICATION_PROCESS = "new"
   [rules.api_v2]
     # higher prio beats lower prio!
     # in case of more then one rule matching, the one with higher prio wins.
-    prio = 10
+    prio = 12
     expression = "a and b"
 
     [rules.api_v2.conditions]

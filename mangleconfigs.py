@@ -93,5 +93,4 @@ def match(variables, rules):
         compiled_expression = exparse(rule['expression'])
         if compiled_expression.evaluate(data):
             return name
-        else:
-            return 'default'
+    return 'default'
