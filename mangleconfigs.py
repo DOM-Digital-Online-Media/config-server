@@ -81,7 +81,8 @@ def prepare():
 
 def match(variables, rules):
     # special case empty variables:
-    if len(variables) == 0:
+    
+    if variables is None or len(variables) == 0:
         return 'empty'
     # sort rules by prio and check!
     for name, rule in sorted(rules.items(), key=lambda config: config[1]['prio'], reverse=True):
