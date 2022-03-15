@@ -11,4 +11,5 @@ fi
 
 
 source="source ${DIR}/.venv/bin/activate"
+#source="source /Users/nitin/.pyenv/versions/3.8.6/envs/edenred/bin/activate"
 $source; python ${DIR}/checkconfig.py
