@@ -1,0 +1,368 @@
+# please note: 'inherit' is a reserved word.
+# the value of 'inherit' refers to another config block which is taken as a template for this one.
+# the templates values will be overwritten by those in this block.
+# you may also define additional values to your liking.
+
+# if the client calls without any arguments
+# the [empty] configuration is deliverd.
+# it should remain empty :-)
+[empty]
+
+# if no rules matches but there ARE parameters posted,
+# the [default] configuration is deliverd.
+# it should remain empty. please adjust rules instead.
+[default]
+
+[production]
+NAME = "production"
+CONTENT_BACKEND_PYTHON = "gutschein-api.edenred.de"
+CONTENT_BACKEND_DRUPAL = "gutschein-admin.edenred.de"
+AUTH_BACKEND = "auth.myedenred.de"
+RECAPTCHA_VERIFY_URL = "gutschein.edenred.de"
+
+[staging]
+NAME = "staging"
+CONTENT_BACKEND_PYTHON = "vp-api-prod.d.dom.de"
+CONTENT_BACKEND_DRUPAL = "voucher-portal-be.d.dom.de"
+AUTH_BACKEND = "voucher-portal-kc.d.dom.de"
+RECAPTCHA_VERIFY_URL = "voucher-portal-web.d.dom.de"
+
+
+### V3
+[api_v3_prod_android]
+inherit = "production"
+CONTENT_BACKEND_PYTHON = "gutschein-api.edenred.de"
+CONTENT_BACKEND_DRUPAL = "gutschein-admin.edenred.de"
+AUTH_BACKEND = "auth.myedenred.de"
+RECAPTCHA_VERIFY_URL = "gutschein.edenred.de"
+
+[api_v3_prod_ios]
+inherit = "production"
+CONTENT_BACKEND_PYTHON = "gutschein-api.edenred.de"
+CONTENT_BACKEND_DRUPAL = "gutschein-admin.edenred.de"
+AUTH_BACKEND = "auth.myedenred.de"
+RECAPTCHA_VERIFY_URL = "gutschein.edenred.de"
+
+[api_v3_stage_android]
+inherit = "staging"
+CONTENT_BACKEND_PYTHON = "vp-api-prod.d.dom.de"
+CONTENT_BACKEND_DRUPAL = "voucher-portal-be.d.dom.de"
+AUTH_BACKEND = "voucher-portal-kc.d.dom.de"
+RECAPTCHA_VERIFY_URL = "voucher-portal-web.d.dom.de"
+
+[api_v3_stage_ios]
+inherit = "staging"
+CONTENT_BACKEND_PYTHON = "vp-api-prod.d.dom.de"
+CONTENT_BACKEND_DRUPAL = "voucher-portal-be.d.dom.de"
+AUTH_BACKEND = "voucher-portal-kc.d.dom.de"
+RECAPTCHA_VERIFY_URL = "voucher-portal-web.d.dom.de"
+
+### V3 common
+[new_comm_proc_prod]
+CONTENT_BACKEND_PYTHON = "gutschein-api.edenred.de"
+CONTENT_BACKEND_DRUPAL = "gutschein-admin.edenred.de"
+AUTH_BACKEND = "auth.myedenred.de"
+RECAPTCHA_VERIFY_URL = "gutschein.edenred.de"
+
+[new_comm_proc_stage]
+CONTENT_BACKEND_PYTHON = "vp-api-prod.d.dom.de"
+CONTENT_BACKEND_DRUPAL = "voucher-portal-be.d.dom.de"
+AUTH_BACKEND = "voucher-portal-kc.d.dom.de"
+RECAPTCHA_VERIFY_URL = "voucher-portal-web.d.dom.de"
+
+### V2
+[api_v2_prod_android]
+inherit = "production"
+
+[api_v2_prod_ios]
+inherit = "production"
+
+[api_v2_stage_android]
+inherit = "staging"
+
+[api_v2_stage_ios]
+inherit = "staging"
+
+### V2 common
+[comm_proc_prod]
+CONTENT_BACKEND_PYTHON = "gutschein-api.edenred.de"
+CONTENT_BACKEND_DRUPAL = "gutschein-admin.edenred.de"
+AUTH_BACKEND = "auth.myedenred.de"
+RECAPTCHA_VERIFY_URL = "gutschein.edenred.de"
+
+[comm_proc_stage]
+CONTENT_BACKEND_PYTHON = "vp-api-prod.d.dom.de"
+CONTENT_BACKEND_DRUPAL = "voucher-portal-be.d.dom.de"
+AUTH_BACKEND = "voucher-portal-kc.d.dom.de"
+RECAPTCHA_VERIFY_URL = "voucher-portal-web.d.dom.de"
+
+
+
+[rules]
+  ### FOR ANDROID
+  ## PRODUCTION
+  [rules.api_v3_prod_android]
+    # higher prio beats lower prio!
+    # in case of more then one rule matching, the one with higher prio wins.
+    prio = 14
+    expression = "a and b and c"
+
+    [rules.api_v3_prod_android.conditions]
+
+      [rules.api_v3_prod_android.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = ">"
+
+      [rules.api_v3_prod_android.conditions.b]
+        key = "os"
+        value = "Android"
+        comparator = "=="
+
+      [rules.api_v3_prod_android.conditions.c]
+        key = "env"
+        value = "prod"
+        comparator = "=="
+
+  [rules.api_v2_prod_android]
+    # higher prio beats lower prio!
+    # in case of more then one rule matching, the one with higher prio wins.
+    prio = 13
+    expression = "a and b and c"
+
+    [rules.api_v2_prod_android.conditions]
+
+      [rules.api_v2_prod_android.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = "<="
+
+      [rules.api_v2_prod_android.conditions.b]
+        key = "os"
+        value = "Android"
+        comparator = "=="
+
+      [rules.api_v2_prod_android.conditions.c]
+        key = "env"
+        value = "prod"
+        comparator = "=="
+
+  ## STAGING
+  [rules.api_v3_stage_android]
+    # higher prio beats lower prio!
+    # in case of more then one rule matching, the one with higher prio wins.
+    prio = 12
+    expression = "a and b and c"
+
+    [rules.api_v3_stage_android.conditions]
+
+      [rules.api_v3_stage_android.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = ">"
+
+      [rules.api_v3_stage_android.conditions.b]
+        key = "os"
+        value = "Android"
+        comparator = "=="
+
+      [rules.api_v3_stage_android.conditions.c]
+        key = "env"
+        value = "stage"
+        comparator = "=="
+
+  [rules.api_v2_stage_android]
+    # higher prio beats lower prio!
+    # in case of more then one rule matching, the one with higher prio wins.
+    prio = 11
+    expression = "a and b and c"
+
+    [rules.api_v2_stage_android.conditions]
+
+      [rules.api_v2_stage_android.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = "<="
+
+      [rules.api_v2_stage_android.conditions.b]
+        key = "os"
+        value = "Android"
+        comparator = "=="
+
+      [rules.api_v2_stage_android.conditions.c]
+        key = "env"
+        value = "stage"
+        comparator = "=="
+
+  ### FOR IOS
+  ## PRODUCTION
+  [rules.api_v3_prod_ios]
+    # higher prio beats lower prio!
+    # in case of more then one rule matching, the one with higher prio wins.
+    prio = 10
+    expression = "a and b and c"
+
+    [rules.api_v3_prod_ios.conditions]
+
+      [rules.api_v3_prod_ios.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = ">"
+
+      [rules.api_v3_prod_ios.conditions.b]
+        key = "os"
+        value = "ios"
+        comparator = "=="
+
+      [rules.api_v3_prod_ios.conditions.c]
+        key = "env"
+        value = "prod"
+        comparator = "=="
+
+  [rules.api_v2_prod_ios]
+    # higher prio beats lower prio!
+    # in case of more then one rule matching, the one with higher prio wins.
+    prio = 9
+    expression = "a and b and c"
+
+    [rules.api_v2_prod_ios.conditions]
+
+      [rules.api_v2_prod_ios.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = "<="
+
+      [rules.api_v2_prod_ios.conditions.b]
+        key = "os"
+        value = "ios"
+        comparator = "=="
+
+      [rules.api_v2_prod_ios.conditions.c]
+        key = "env"
+        value = "prod"
+        comparator = "=="
+
+  ## STAGING
+  [rules.api_v3_stage_ios]
+    # higher prio beats lower prio!
+    # in case of more then one rule matching, the one with higher prio wins.
+    prio = 8
+    expression = "a and b and c"
+
+    [rules.api_v3_stage_ios.conditions]
+
+      [rules.api_v3_stage_ios.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = ">"
+
+      [rules.api_v3_stage_ios.conditions.b]
+        key = "os"
+        value = "ios"
+        comparator = "=="
+
+      [rules.api_v3_stage_ios.conditions.c]
+        key = "env"
+        value = "stage"
+        comparator = "=="
+
+  [rules.api_v2_stage_ios]
+    # higher prio beats lower prio!
+    # in case of more then one rule matching, the one with higher prio wins.
+    prio = 7
+    expression = "a and b and c"
+
+    [rules.api_v2_stage_ios.conditions]
+
+      [rules.api_v2_stage_ios.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = "<="
+
+      [rules.api_v2_stage_ios.conditions.b]
+        key = "os"
+        value = "ios"
+        comparator = "=="
+
+      [rules.api_v2_stage_ios.conditions.c]
+        key = "env"
+        value = "stage"
+        comparator = "=="
+
+
+  ### COMMON
+  ## PRODUCTION
+  [rules.comm_proc_prod]
+    prio = 6
+    expression = "a and b"
+
+    [rules.comm_proc_prod.conditions]
+      [rules.comm_proc_prod.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = "<="
+      [rules.comm_proc_prod.conditions.b]
+        key = "env"
+        value = "prod"
+        comparator = "=="
+
+  [rules.new_comm_proc_prod]
+    prio = 5
+    expression = "a and b"
+
+    [rules.new_comm_proc_prod.conditions]
+      [rules.new_comm_proc_prod.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = ">"
+      [rules.new_comm_proc_prod.conditions.b]
+        key = "env"
+        value = "prod"
+        comparator = "=="
+
+  [rules.production]
+    prio = 4
+
+    [rules.production.conditions]
+      [rules.production.conditions.a]
+        key = "env"
+        value = "prod"
+        comparator = "=="
+
+  ## STAGING
+  [rules.comm_proc_stage]
+    prio = 3
+    expression = "a and b"
+
+    [rules.comm_proc_stage.conditions]
+      [rules.comm_proc_stage.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = "<="
+      [rules.comm_proc_stage.conditions.b]
+        key = "env"
+        value = "stage"
+        comparator = "=="
+
+  [rules.new_comm_proc_stage]
+    prio = 2
+    expression = "a and b"
+
+    [rules.new_comm_proc_stage.conditions]
+      [rules.new_comm_proc_stage.conditions.a]
+        key = "app_version"
+        value = "1.0"
+        comparator = ">"
+      [rules.new_comm_proc_stage.conditions.b]
+        key = "env"
+        value = "stage"
+        comparator = "=="
+
+  [rules.staging]
+    prio = 1
+
+    [rules.staging.conditions]
+      [rules.staging.conditions.a]
+        key = "env"
+        value = "stage"
+        comparator = "=="
